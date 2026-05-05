@@ -46,7 +46,7 @@ I wondered about using SVM and logistical regression (seen the weeks after BO). 
 - All functions are fundamentally regression problems rather than classification problems. So, logistical regression does not seem to be really relevant.
 - For SVM, they could approximate promising regions, but would not optimise within them.
 
-# Strategy for Weeks 4 to 10
+# Strategy for Weeks 4 to 13
 
 ## Week 4
 
@@ -76,10 +76,30 @@ For week 9, I adjusted the acquisition functions for some functions to take hete
 
 For week 10, I made a more structural change. Despite having reduced Kappa/Xi for previous submissions, I was still unhappy about the suggested next points. So, I introduced a greater focus around the current optimum by restricting the suggestions to an elliptical area around the current best point, i.e. a more-trusted region. This may be seen as moving from a more global search to a more local refinement phase. The choice of elliptical vs. spherical comes from the idea that spherical may be a lot more constraining in higher dimension and also when certain features have much more influence than others. So, the eligible area along each feature is defined in proportion to the standard deviation of the observed feature values for this feature. Otherwise, I was noticing that the next suggested points for some features could sometimes be very far from the feature value for the optimum, this despite having a higher density of candidates around the current optimum and the reduction in Kappa/Xi.
 
-# General Comments on the Evolution From Week 4 to Week 10
+## Week 11
+
+For week 11, I continued with the more local approach introduced in week 10, with a greater focus on the current best regions. At that stage, I was increasingly less convinced that broad exploration was still the best use of the remaining submissions. The goal was therefore to keep the benefits of the surrogate models and acquisition functions, but to make sure that the final suggestions remained close enough to the regions that already looked promising.
+
+I also relied more heavily on diagnostic plots, especially the per-feature charts showing the model prediction and uncertainty along each feature. These plots were useful because the automated suggestion was sometimes not fully aligned with what I thought the structure of the function was suggesting. However, I still mostly kept the process model-driven and did not manually override the suggestions as much as I perhaps should have.
+
+## Week 12
+
+For week 12, I kept refining the exploitation phase. By then, most of the value of the project was less about discovering completely new regions, and more about improving around the best points already found. For some functions, especially function 4, I was unable to really improve from what appeared to be the optimum in the initially provided data. This may suggest either that the initial data already contained a very strong point, or that my model and candidate generation process were not able to identify a better region.
+
+I continued to use tree-based models for functions 2, 4, 6 and 7, Gaussian Processes for functions 1, 3 and 5, and XGBoost for function 8. For some functions, I also kept the heteroskedasticity-style adjustment in the uncertainty term, as I felt that the standard uncertainty estimate alone was not always sufficient.
+
+## Week 13
+
+For the final week, the strategy was mostly focused on exploitation and risk control. With only one submission left, broad exploration seemed less justified, unless there was strong evidence that the current best region was not reliable. I therefore kept the candidate selection close to the trusted regions and used the diagnostic charts to assess whether the proposed points were plausible.
+
+In hindsight, this final phase also highlighted one of the limitations of my approach. I remained somewhat unsatisfied with the automated suggestions for several functions, and my own feature-level charts sometimes suggested that alternative points might have been more sensible. Because I come from a systematic finance background, I was reluctant to intervene manually and override the model. For this challenge, however, a more discretionary review of the final suggested points might have helped.
+
+# General Comments on the Evolution From Week 4 to Week 13
 
 Overall, the strategy from week 4 to week 10 may be summarised as a progressive move from broad exploration towards more local exploitation. In the first rounds, I think the broad candidate generation and relatively high Kappa/Xi made sense, as there was little information and it was important to explore. But later, this may have become less efficient, and I increasingly focused on whether the suggested points were really coherent with the current best regions.
 
 Another important evolution is that I moved from just adjusting parameters like Kappa/Xi to making more structural changes: first by adding an extra uncertainty component for some functions to account for heteroskedasticity, and then by explicitly restricting the search to a more-trusted local region. I think this was necessary, because parameter adjustments alone were not enough to get suggestions close enough to the current optimum when I wanted to exploit more.
 
-In that sense, the project evolved from a rather standard BO framework with broad candidate generation and high exploration to a more refined local optimisation process, where the surrogate, the uncertainty, and the candidate region are all adjusted depending on the function and on the stage of the search.
+In that sense, the project evolved from a rather standard BO framework with broad candidate generation and high exploration to a more refined local optimisation process, where the surrogate, the uncertainty, and the candidate region are all adjusted depending on the function and on the stage of the search. In the final weeks, the main question became whether to trust the automated suggestion or whether to intervene manually based on diagnostics.
+
+If I had to restart the project, I would probably keep the same broad modelling split between GP, ExtraTrees and XGBoost, but I would tune the GP kernels more carefully earlier, use the diagnostic plots more systematically, and allow myself more manual intervention in the last submissions when the automated suggestions looked suboptimal.
