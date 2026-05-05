@@ -103,3 +103,9 @@ Another important evolution is that I moved from just adjusting parameters like 
 In that sense, the project evolved from a rather standard BO framework with broad candidate generation and high exploration to a more refined local optimisation process, where the surrogate, the uncertainty, and the candidate region are all adjusted depending on the function and on the stage of the search. In the final weeks, the main question became whether to trust the automated suggestion or whether to intervene manually based on diagnostics.
 
 If I had to restart the project, I would probably keep the same broad modelling split between GP, ExtraTrees and XGBoost, but I would tune the GP kernels more carefully earlier, use the diagnostic plots more systematically, and allow myself more manual intervention in the last submissions when the automated suggestions looked suboptimal.
+
+# License
+
+This project is licensed under the MIT License. The code can be freely used, modified and distributed, provided that the original copyright notice is retained.
+
+See the LICENSE file for details.
