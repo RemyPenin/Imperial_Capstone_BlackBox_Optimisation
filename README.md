@@ -1,3 +1,7 @@
+## Run the notebook (no installation required)
+
+[![Open in Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/RemyPenin/Imperial_Capstone_BlackBox_Optimisation/main?labpath=CapstoneBBO.ipynb)
+
 # Project Overview
 
 This is one of the capstone projects for my Professional Certificate in Machine Learning and Artificial Intelligence at Imperial College. This is the Black-Box Optimisation (BBO) challenge that took place during the NeurIPS 2020 conference.
